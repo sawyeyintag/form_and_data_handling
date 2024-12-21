@@ -1,19 +1,78 @@
-<!-- views/updateUser.ejs -->
 <!DOCTYPE html>
 <html>
   <head>
     <title><%= title %></title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 20px;
+      }
+      h1 {
+        color: #333;
+        text-align: center;
+      }
+      form {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        max-width: 400px;
+        margin: 0 auto;
+      }
+      input[type="text"],
+      input[type="email"],
+      input[type="number"],
+      textarea {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 15px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-sizing: border-box;
+      }
+      textarea {
+        height: 100px;
+      }
+      button {
+        background-color: #28a745;
+        color: white;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        width: 100%;
+      }
+      button:hover {
+        background-color: #218838;
+      }
+      a {
+        display: block;
+        text-align: center;
+        margin-top: 20px;
+        color: #007BFF;
+        text-decoration: none;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+    </style>
   </head>
-<body>
-  <h1><%= title %></h1>
-  <%- include("partials/errors.ejs") %>
-  <form action="/<%= user.id %>/update" method="POST">
-    <input type="text" name="name" value="<%= user.name %>" required>
-    <input type="email" name="email" value="<%= user.email %>" required>
-    <input type="number" name="age" value="<%= user.age %>" required>
-    <textarea name="bio" required><%= user.bio %></textarea>
-    <button type="submit">Update User</button>
-  </form>
-  <a href="/">Back to home</a>
-</body>
+  <body>
+    <h1><%= title %></h1>
+    <%- include("partials/errors.ejs") %>
+    <form action="/<%= user.id %>/update" method="POST">
+      <label for="name">Name: </label>
+      <input type="text" name="name" value="<%= user.name %>" required>
+      <label for="email">Email: </label>
+      <input type="email" name="email" value="<%= user.email %>" required>
+      <label for="age">Age: </label>
+      <input type="number" name="age" value="<%= user.age %>" required>
+      <label for="bio">Bio: </label>
+      <textarea name="bio" required><%= user.bio %></textarea>
+      <button type="submit">Update User</button>
+    </form>
+    <a href="/">Back to home</a>
+  </body>
 </html>

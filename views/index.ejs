@@ -1,23 +1,97 @@
 <html>
   <head>
     <title><%= title %></title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 20px;
+      }
+      h1 {
+        color: #333;
+      }
+      .search-box {
+        margin-bottom: 20px;
+      }
+      input[type="text"] {
+        padding: 10px;
+        width: 100%;
+        max-width: 300px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+      }
+      ul {
+        list-style-type: none;
+        padding: 0;
+      }
+      li {
+        background-color: #fff;
+        padding: 10px;
+        margin: 10px 0;
+        border-radius: 5px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+      a {
+        color: #007BFF;
+        text-decoration: none;
+        margin-right: 10px;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+      .user-info {
+        margin-bottom: 10px;
+      }
+    </style>
   </head>
   <body>
     <h1><%= title %></h1>
-    <ul>
-      <% if (locals.users) {%>
+    
+    <!-- Search Box -->
+    <div class="search-box">
+      <input type="text" id="search" placeholder="Search users..." onkeyup="searchUsers()">
+    </div>
+
+    <ul id="user-list">
+      <% if (locals.users) { %>
         <% users.forEach(user => { %>
-          <li>
-            ID: <%= user.id %> <br>
-            Name: <%= user.name %> <br>
-            Email: <%= user.email %> <br>
-            Age: <%= user.age %> <br>
-            Bio: <%= user.bio %>
+          <li class="user-item">
+            <div class="user-info">
+              ID: <%= user.id %> <br>
+              Name: <%= user.name %> <br>
+              Email: <%= user.email %> <br>
+              Age: <%= user.age %> <br>
+              Bio: <%= user.bio %>
+            </div>
             <a href="/<%= user.id %>/update">Update</a>
+            <a href="/<%= user.id %>/delete">Delete</a>
           </li>
         <% }); %>
       <% } %>
     </ul>
+
     <a href="/create">Create a user</a>
+
+    <script>
+      function searchUsers() {
+        const input = document.getElementById('search');
+        const filter = input.value.toLowerCase();
+        const userList = document.getElementById('user-list');
+        const userItems = userList.getElementsByClassName('user-item');
+
+        for (let i = 0; i < userItems.length; i++) {
+          const userItem = userItems[i];
+          const userInfo = userItem.getElementsByClassName('user-info')[0];
+          const text = userInfo.textContent || userInfo.innerText;
+
+          if (text.toLowerCase().indexOf(filter) > -1) {
+            userItem.style.display = "";
+          } else {
+            userItem.style.display = "none";
+          }
+        }
+      }
+    </script>
   </body>
 </html>
