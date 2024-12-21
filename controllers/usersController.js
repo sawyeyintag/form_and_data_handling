@@ -1,18 +1,4 @@
 const usersStorage = require("../storages/usersStorage");
-
-exports.usersListGet = (req, res) => {
-  console.log(usersStorage.getUsers());
-  res.render("index", {
-    title: "Users List",
-    users: usersStorage.getUsers(),
-  });
-};
-
-exports.usersCreateGet = (req, res) => {
-  res.render("createUser", { title: "Create User" });
-};
-
-// This just shows the new stuff we're adding to the existing contents
 const { body, validationResult } = require("express-validator");
 
 const alphaErr = "must only contain letters.";
@@ -31,6 +17,39 @@ const validateUser = [
     .trim()
     .isLength({ max: 100 })
     .withMessage("Bio must be less than 100 characters."),
+];
+
+exports.usersListGet = (req, res) => {
+  console.log(usersStorage.getUsers());
+  res.render("index", {
+    title: "Users List",
+    users: usersStorage.getUsers(),
+  });
+};
+
+exports.usersCreateGet = (req, res) => {
+  res.render("createUser", { title: "Create User" });
+};
+
+exports.usersUpdateGet = (req, res) => {
+  const user = usersStorage.getUser(req.params.id);
+  res.render("updateUser", { title: "Update User", user });
+};
+
+exports.usersUpdatePost = [
+  validateUser,
+  (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).render("updateUser", {
+        title: "Update user",
+        errors: errors.array(),
+      });
+    }
+    const { name, email, age, bio } = req.body;
+    usersStorage.updateUser(req.params.id, { name, email, age, bio });
+    res.redirect("/");
+  },
 ];
 
 exports.usersCreatePost = [

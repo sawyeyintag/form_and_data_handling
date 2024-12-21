@@ -15,11 +15,12 @@ class UsersStorage {
   }
 
   getUser(id) {
-    return this.storage[id];
+    return this.storage.find((user) => user.id === id);
   }
 
   updateUser(id, { name, email, age, bio }) {
-    this.storage[id] = { name, email, age, bio };
+    const userIndex = this.storage.findIndex((user) => user.id === id);
+    this.storage[userIndex] = { id, name, email, age, bio };
   }
 
   deleteUser(id) {
