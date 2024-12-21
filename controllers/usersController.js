@@ -72,3 +72,24 @@ exports.usersDeleteGet = (req, res) => {
   usersStorage.deleteUser(req.params.id);
   res.redirect("/");
 };
+
+exports.usersSearchGet = (req, res) => {
+  const { name } = req.query;
+
+  // Check if 'name' is provided before calling toLowerCase()
+  if (!name) {
+    return res.render("index", {
+      title: "Users List",
+      users: usersStorage.getUsers(), // Show all users if no search term is provided
+    });
+  }
+
+  const users = usersStorage
+    .getUsers()
+    .filter((user) => user.name.toLowerCase().includes(name.toLowerCase()));
+
+  res.render("index", {
+    title: "Users List",
+    users,
+  });
+};

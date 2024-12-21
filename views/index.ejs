@@ -50,7 +50,10 @@
     
     <!-- Search Box -->
     <div class="search-box">
-      <input type="text" id="search" placeholder="Search users..." onkeyup="searchUsers()">
+      <form action="/search" method="get">
+        <input type="text" name="name" placeholder="Search by name">
+        <button type="submit">Search</button>
+      </form>
     </div>
 
     <ul id="user-list">
@@ -73,25 +76,6 @@
 
     <a href="/create">Create a user</a>
 
-    <script>
-      function searchUsers() {
-        const input = document.getElementById('search');
-        const filter = input.value.toLowerCase();
-        const userList = document.getElementById('user-list');
-        const userItems = userList.getElementsByClassName('user-item');
 
-        for (let i = 0; i < userItems.length; i++) {
-          const userItem = userItems[i];
-          const userInfo = userItem.getElementsByClassName('user-info')[0];
-          const text = userInfo.textContent || userInfo.innerText;
-
-          if (text.toLowerCase().indexOf(filter) > -1) {
-            userItem.style.display = "";
-          } else {
-            userItem.style.display = "none";
-          }
-        }
-      }
-    </script>
   </body>
 </html>
