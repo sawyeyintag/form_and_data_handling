@@ -5,11 +5,17 @@
   <body>
     <h1><%= title %></h1>
     <ul>
-      <% if (locals.users) {%> <% users.forEach(user => { %>
-      <li>
-        ID: <%= user.id %>, Name: <%= user.firstName %> <%= user.lastName %>
-      </li>
-      <% }); %> <% } %>
+      <% if (locals.users) {%>
+        <% users.forEach(user => { %>
+          <li>
+            ID: <%= user.id %> <br>
+            Name: <%= user.name %> <br>
+            Email: <%= user.email %> <br>
+            Age: <%= user.age %> <br>
+            Bio: <%= user.bio %>
+          </li>
+        <% }); %>
+      <% } %>
     </ul>
     <a href="/create">Create a user</a>
   </body>

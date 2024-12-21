@@ -6,7 +6,7 @@ require("dotenv").config(); // Corrected this line
 
 app.set("view engine", "ejs");
 app.use(express.urlencoded({ extended: true }));
-app.use("/users", usersRouter);
+app.use("/", usersRouter);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {

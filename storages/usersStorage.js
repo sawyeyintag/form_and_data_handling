@@ -2,17 +2,16 @@ const { v4: uuidv4 } = require("uuid");
 
 class UsersStorage {
   constructor() {
-    this.storage = {};
+    this.storage = [];
   }
 
   addUser({ name, email, age, bio }) {
     const id = uuidv4();
-    this.storage[id] = { name, email, age, bio };
+    this.storage.push({ id, name, email, age, bio });
   }
 
   getUsers() {
-    // Convert storage object to an array of users
-    return Object.keys(this.storage).map((id) => ({ id, ...this.storage[id] }));
+    return this.storage;
   }
 
   getUser(id) {
@@ -20,13 +19,11 @@ class UsersStorage {
   }
 
   updateUser(id, { name, email, age, bio }) {
-    if (this.storage[id]) {
-      this.storage[id] = { name, email, age, bio };
-    }
+    this.storage[id] = { name, email, age, bio };
   }
 
   deleteUser(id) {
-    delete this.storage[id];
+    this.storage = this.storage.filter((user) => user.id !== id);
   }
 }
 
